@@ -1,6 +1,6 @@
 # patlikuran
 
-solver from a traditional card game (I am not sure about its origin)
+solver for a traditional card game (I am not sure about its origin)
 
 four cards are dealt randomly with values between 1 to 10
 players are supposed to perform basic arithmetic operations 

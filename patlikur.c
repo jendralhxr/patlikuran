@@ -66,7 +66,7 @@ int main(int argc, char **argv){
 		}	
 	printf("deal\n");
 			
-	int step=2e3; // just give up already		
+	int step=STEP_MAX; // just give up already		
 	while(step<STEP_MAX){
 		if (evaluate_set()==24) break;
 		step++;

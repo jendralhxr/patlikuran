@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define STEP_MAX 8e6
+#define STEP_MAX 4000
 
 char card[4]; // 1 to 10
 char token[3]; //inbetween cards,
@@ -66,15 +66,15 @@ int main(int argc, char **argv){
 		}	
 	printf("deal\n");
 			
-	int step=STEP_MAX; // just give up already		
+	int step=0; // just give up already		
 	while(step<STEP_MAX){
-		if (evaluate_set()==24) break;
 		step++;
+		if (evaluate_set()==24) break;
 		//printf("step%d\n",step);
 		}
 	
 	if (step==STEP_MAX){
-		printf("computer is too dumb\n");
+		printf("computer is too dumb %d\n",step);
 		return(0);
 		}
 	
@@ -88,7 +88,7 @@ int main(int argc, char **argv){
 		}
 	
 	// print result
-	printf("after %d steps: %d %c %d %c %d %c %d", step, card[0], token[0], card[1], token[1],\
+	printf("after %d steps: %d %c %d %c %d %c %d\n", step, card[0], token[0], card[1], token[1],\
 		card[2], token[2], card[3]);
 	
 	}

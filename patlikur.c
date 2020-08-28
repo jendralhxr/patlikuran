@@ -69,7 +69,7 @@ float evaluate_set(){
 
 int main(int argc, char **argv){
 	char hard=0;
-	float val;
+	float result;
 	srand(time(NULL)); // get in today's mood
 	if (argc==1){ // no drawn card, generate set of one
 		for (i=0; i<4; i++){
@@ -87,12 +87,11 @@ int main(int argc, char **argv){
 	
 	while(step<STEP_MAX){
 		step++;
-		val = evaluate_set();
-		if (val== 24.0) break;
-		else if (val== -24.0) {hard=1; break;}
-		else if (val*24== 1)  {hard=1; break;}
-		else if (val*24== -1) {hard=1; break;}
-		
+		result = evaluate_set();
+		if (result== 24.0) break;
+		else if (result== -24.0) {hard=1; break;}
+		else if (result*24== 1)  {hard=1; break;}
+		else if (result*24== -1) {hard=1; break;}
 		//printf("step%d\n",step);
 		}
 	
@@ -120,3 +119,7 @@ int main(int argc, char **argv){
 	
 // ended up with Monte Carlonian search to ensure constant number of operations in each iteration
 // was considering Reverse Polish Notation and non-randomized exhaustive search
+// nested parenthesis was handled liek a boss
+// todo: two parenthesis
+
+// I should've done RPN, for real

@@ -49,7 +49,7 @@ char evaluate_set(){
 		}
 	
 	// shuffle token
-	for (i=0; i<4; i++){
+	for (i=0; i<3; i++){
 		token[i] = rand()%4;
 		}
 	
@@ -64,6 +64,8 @@ char evaluate_set(){
 			default: break;
 			}
 		}
+	
+	if ((val==-24.0) && (token[2]!=0) && (token[2]!=1) )return(24);
 	
 	return(val);
 	}

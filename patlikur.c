@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define STEP_MAX 400
+#define STEP_MAX 40000
 
 char card[4]; // 1 to 10
 char token[3]; //inbetween cards,
@@ -25,7 +25,7 @@ unsigned int evaluate_chance(){
 	return(odd);
 	}
 	
-char evaluate_set(){
+float evaluate_set(){
 	char shuffle, temp;
 	
 	/*
@@ -54,23 +54,30 @@ char evaluate_set(){
 		}
 	
 	// evaluate value
-	val = card[0];
+	val = (float) card[0];
 	for (i=0; i<3; i++){
 		switch (token[i]){
-			case 0: val+= (float) card[i+1]; break;
-			case 1: val-= (float) card[i+1]; break;
-			case 2: val*= (float) card[i+1]; break;
-			case 3: val/= (float) card[i+1]; break; // does it need to be exact factors?
+			case 0: val += (float) card[i+1]; break;
+			case 1: val -= (float) card[i+1]; break;
+			case 2: val *= (float) card[i+1]; break;
+			case 3: val /= (float) card[i+1]; break; // does it need to be exact factors?
 			default: break;
 			}
 		}
 	
-	if ((val==-24.0) && (token[2]!=0) && (token[2]!=1) )return(24);
+	if ((val==-24.0) || (val*24==-1) || (val*24==1)){
+		if ( (token[2]!=0) && (token[2]!=1) ){
+			printf("requires nested parenthesis: %f\n",val);
+			return(24);
+			}
+		}
+		
 	
 	return(val);
 	}
 
 int main(int argc, char **argv){
+	float result;
 	srand(time(NULL)); // get in today's mood
 	if (argc==1){ // no drawn card, generate set of one
 		for (i=0; i<4; i++){
@@ -88,8 +95,9 @@ int main(int argc, char **argv){
 			
 	while(step<STEP_MAX){
 		step++;
-		if (evaluate_set()==24) break;
-		//printf("step%d\n",step);
+		result= evaluate_set();
+		printf("step%d %f\n", step, result);
+		if (result==24) break;
 		}
 	
 	if (step==STEP_MAX){
@@ -115,3 +123,4 @@ int main(int argc, char **argv){
 // ended up with Monte Carlonian search to ensure constant number of operations in each iteration
 // was considering Reverse Polish Notation and non-randomized exhaustive search
 // todo: parenthesis rule, like (5 - (1/5)) * 5
+// 3 8 3 8 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define STEP_MAX 400
+#define STEP_MAX 4000
 
 char card[4]; // 1 to 10
 char token[3]; //inbetween cards,
@@ -25,7 +25,7 @@ unsigned int evaluate_chance(){
 	return(odd);
 	}
 	
-float evaluate_set(){
+float evaluate_set(char eval_mode){
 	char shuffle, temp;
 	/*
 	 * among valid 24 combinations of the four dealt cards
@@ -52,19 +52,44 @@ float evaluate_set(){
 		token[i] = rand()%4;
 		}
 	
-	// evaluate value
-	val = card[0];
-	for (i=0; i<3; i++){
-		switch (token[i]){
-			case 0: val+= (float) card[i+1]; break;
-			case 1: val-= (float) card[i+1]; break;
-			case 2: val*= (float) card[i+1]; break;
-			case 3: val/= (float) card[i+1]; break; // does it need to be exact factors?
+	// sequential eval, may imply nested parenthesis
+	if (eval_mode==0){
+		val = card[0];
+		for (i=0; i<3; i++){
+			switch (token[i]){
+				case 0: val+= (float) card[i+1]; break;
+				case 1: val-= (float) card[i+1]; break;
+				case 2: val*= (float) card[i+1]; break;
+				case 3: val/= (float) card[i+1]; break;
+				default: break;
+				}
+			}
+		return(val);
+		}
+		
+	// two parentheses	
+	else if (eval_mode==2){
+		float nval[3];
+		for (i=0; i<3; i+=2){
+			switch (token[i]){
+				case 0: nval[i] = (float) card[i] + (float) card[i+1]; break;
+				case 1: nval[i] = (float) card[i] - (float) card[i+1]; break;
+				case 2: nval[i] = (float) card[i] * (float) card[i+1]; break;
+				case 3: nval[i] = (float) card[i] / (float) card[i+1]; break;
+				default: break;
+				}
+			}
+		switch (token[1]){
+			case 0: nval[1] = nval[0] + nval[2]; break;
+			case 1: nval[1] = nval[0] - nval[2]; break;
+			case 2: nval[1] = nval[0] * nval[2]; break;
+			case 3: nval[1] = nval[0] / nval[2]; break;
 			default: break;
 			}
+			
+		return(nval[1]);
 		}
 	
-	return(val);
 	}
 
 int main(int argc, char **argv){
@@ -83,16 +108,28 @@ int main(int argc, char **argv){
 			printf("%d ", card[i]);
 			}
 		}	
-	printf(" --- chance of appearance: %.4f", evaluate_chance()/1e4);
+	printf(" -- chance of appearance: %.4f", evaluate_chance()/1e4);
 	
 	while(step<STEP_MAX){
 		step++;
-		result = evaluate_set();
+		
+		// evaluating the cards and operand tokens sequentially
+		result = evaluate_set(0);
 		if (result== 24.0) break;
-		else if (result== -24.0) {hard=1; break;}
-		else if (result*24== 1)  {hard=1; break;}
-		else if (result*24== -1) {hard=1; break;}
-		//printf("step%d\n",step);
+		else{ 
+			if ((token[2] == 2) || (token[2] == 3)){
+				// final multiplication/division is kinda advanced strat
+				if (result== -24.0) 	 {hard=1; break;}
+				else if (result*24== 1)  {hard=1; break;}
+				else if (result*24== -1) {hard=1; break;}
+				}
+			}	
+		
+		// two parentheses operation
+		result = evaluate_set(2);
+		if (result== 24.0) {hard=1; break;} // I guess this also classifies as 'hard'
+		
+		//printf("step%d %f\n",step, result);
 		}
 	
 	if (step==STEP_MAX){

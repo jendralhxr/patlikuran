@@ -16,7 +16,7 @@ int step;
 	
 unsigned int evaluate_chance(){
 	unsigned int odd=1;
-	char copy[11]= {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
+	char copy[14]= {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
 	
 	for (i=0; i<4; i++){
 		odd *= copy[card[i]];
@@ -98,7 +98,7 @@ int main(int argc, char **argv){
 	srand(time(NULL)); // get in today's mood
 	if (argc==1){ // no drawn card, generate set of one
 		for (i=0; i<4; i++){
-			card[i] = 1+ rand()%10;
+			card[i] = 1+ rand()%14;
 			printf("%d ", card[i]);
 			}
 		}
@@ -157,6 +157,5 @@ int main(int argc, char **argv){
 // ended up with Monte Carlonian search to ensure constant number of operations in each iteration
 // was considering Reverse Polish Notation and non-randomized exhaustive search
 // nested parenthesis was handled liek a boss
-// todo: two parenthesis
 
 // I should've done RPN, for real

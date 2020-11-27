@@ -89,7 +89,6 @@ float evaluate_set(char eval_mode){
 			
 		return(nval[1]);
 		}
-	
 	}
 
 int main(int argc, char **argv){
@@ -108,7 +107,7 @@ int main(int argc, char **argv){
 			printf("%d ", card[i]);
 			}
 		}	
-	printf(" -- chance of appearance: %.4f", evaluate_chance()/1e4);
+	//printf(" -- chance of appearance: %.4f", evaluate_chance()/1e4);
 	
 	while(step<STEP_MAX){
 		step++;
@@ -148,9 +147,9 @@ int main(int argc, char **argv){
 		}
 	
 	// print result
-	printf("\nafter %d steps: %d %c %d %c %d %c %d\n", step, card[0], token[0], card[1], token[1],\
-		card[2], token[2], card[3]);
-	if (hard) printf("indeed it was a difficult one\n");
+	printf("%d steps: %d %c %d %c %d %c %d %lf %d\n", step, card[0], token[0], card[1], token[1],\
+		card[2], token[2], card[3], evaluate_chance()/1e6, hard);
+	//if (hard) printf("indeed it was a difficult one\n");
 		
 	}
 	

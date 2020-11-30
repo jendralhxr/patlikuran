@@ -100,7 +100,7 @@ int main(int argc, char **argv){
 			card[i] = 1+ rand()%14;
 			printf("%d ", card[i]);
 			}
-		srand(atoi(argv[4]);
+		srand(atoi(argv[4]));
 		}
 		
 	else{

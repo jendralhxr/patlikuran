@@ -94,13 +94,13 @@ float evaluate_set(char eval_mode){
 int main(int argc, char **argv){
 	char hard=0;
 	float result;
-	srand(time(NULL)); // get in today's mood
-	if (argc==1){ // no drawn card, generate set of one
+	srand(atoi(argv[4]));
+	if (argc==1){ // no drawn card, generate a set
 		for (i=0; i<4; i++){
 			card[i] = 1+ rand()%14;
 			printf("%d ", card[i]);
 			}
-		srand(atoi(argv[4]));
+		srand(time(NULL)); // get in today's mood
 		}
 		
 	else{

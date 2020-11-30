@@ -100,7 +100,9 @@ int main(int argc, char **argv){
 			card[i] = 1+ rand()%14;
 			printf("%d ", card[i]);
 			}
+		srand(atoi(argv[4]);
 		}
+		
 	else{
 		for (i=0; i<4; i++){
 			card[i] = atoi(argv[1+i]);

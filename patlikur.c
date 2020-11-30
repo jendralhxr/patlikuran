@@ -107,7 +107,7 @@ int main(int argc, char **argv){
 			card[i] = atoi(argv[1+i]);
 			printf("%d ", card[i]);
 			}
-		//printf("seed to %s\n", argv[5]);
+		printf("seed to %s --- ", argv[5]);
 		srand(atoi(argv[5]));
 		}	
 	//printf(" -- chance of appearance: %.4f", evaluate_chance()/1e4);
@@ -135,7 +135,7 @@ int main(int argc, char **argv){
 		}
 	
 	if (step==STEP_MAX){
-		printf("\ncomputer is too dumb");
+		printf("computer is too dumb");
 		printf("\n");
 		return(0);
 		}

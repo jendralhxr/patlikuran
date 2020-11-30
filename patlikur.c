@@ -94,7 +94,6 @@ float evaluate_set(char eval_mode){
 int main(int argc, char **argv){
 	char hard=0;
 	float result;
-	srand(atoi(argv[4]));
 	if (argc==1){ // no drawn card, generate a set
 		for (i=0; i<4; i++){
 			card[i] = 1+ rand()%14;
@@ -108,6 +107,8 @@ int main(int argc, char **argv){
 			card[i] = atoi(argv[1+i]);
 			printf("%d ", card[i]);
 			}
+		//printf("seed to %s\n", argv[5]);
+		srand(atoi(argv[5]));
 		}	
 	//printf(" -- chance of appearance: %.4f", evaluate_chance()/1e4);
 	
